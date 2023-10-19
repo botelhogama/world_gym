@@ -21,9 +21,10 @@ if not os.path.exists(destination_path):
 
 print("etapa 1 - merge data")
 start_time = time()
-members_data_itapoa = get_data.GetClientData(endpoint="/api/v1/members", take_number=150, unidade="itapoa")
+members_data_itapoa = get_data.GetClientData(endpoint="/api/v1/members", take_number=150, unidade="planaltina")
 df_members = members_data_itapoa.retrieve_data(use_cache=False)
 df_members.to_csv(os.path.join(destination_path, f'data_raw_{members_data_itapoa.unidade}.csv'), index=True, header=True)
+print(members_data_itapoa.unidade)
 print(f"df_members_itapoa shape is : {df_members.shape}")
 
 # members_data_planaltina = get_data.GetClientData(endpoint="/api/v1/members", take_number=50, unidade="planaltina")
@@ -39,7 +40,7 @@ print(df.columns)
 
 gym_cordinates = {
     'itapoa': (-15.751971192888982, -47.76314034147339),
-    'planaltina': (-15.453192773567416, -47.60772964591448)
+    'planaltina': (-15.453192773567416, -47.60772964591448),
 }
 map_name = {
     'BRASÍLIA': 'Brasilia',
@@ -88,6 +89,7 @@ df[ 'address' ] = df[ 'address' ].fillna('')
 df[ 'city' ] = df[ 'city' ].fillna('')
 end_time = time()
 elapsed_time = end_time - start_time
+print(df['unidade'])
 print(Fore.GREEN + f"Tempo de execução da etapa 2: {elapsed_time:.2f} segundos")
 
 print("etapa 3 - get coordinates from address")
@@ -145,4 +147,4 @@ print("etapa 8 - save file as data_raw.csv inside data folder")
 data = df.copy()
 # data['distance'] = pre_process.calculate_distance_list(data['address'], data['unidade'])
 data.to_csv(os.path.join(destination_path, f'dataset_{members_data_itapoa.unidade}.csv'), index=True, header=True)
-print(Fore.GREEN + "file saved as dataset_{members_data_itapoa.unidade}.csv inside data folder")
+print(Fore.GREEN + f"file saved as dataset_{members_data_itapoa.unidade}.csv inside data folder")
