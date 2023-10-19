@@ -12,8 +12,10 @@ class GetClientData:
         self.user = "worldgym"
         if unidade == "itapoa":
             self.password = "44D6E01E-6DFF-4E0F-A787-73F0036496F1"
+            self.unidade = unidade
         elif unidade == "planaltina":
             self.password = "D1BC64B6-4EE7-4E16-974E-BD37F2F3DC2E"
+            self.unidade = unidade
 
         self.endpoint = endpoint
         self.params = {
